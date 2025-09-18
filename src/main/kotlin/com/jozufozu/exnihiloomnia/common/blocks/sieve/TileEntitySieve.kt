@@ -233,7 +233,16 @@ class TileEntitySieve : TileEntity(), ITickable {
 
     override fun readFromNBT(compound: NBTTagCompound) {
         super.readFromNBT(compound)
-        if (compound.hasKey("mesh", Constants.NBT.TAG_COMPOUND))
+        if (compound.hasKey("mesh", Constants.NBT.TAG_COMPOUND)) {
+            mesh = ItemStack(compound.getCompoundTag("mesh"))
+        } else {
+            mesh = ItemStack.EMPTY
+        }
+        if (compound.hasKey("contents", Constants.NBT.TAG_COMPOUND)) {
+            contents = ItemStack(compound.getCompoundTag("contents"))
+        } else {
+            contents = ItemStack.EMPTY
+        }
         countdown = compound.getInteger("countdown")
         countdownLastTick = countdown
         requiredTime = compound.getInteger("requiredTime")
